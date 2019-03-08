@@ -303,4 +303,4 @@ async def help(ctx):
       embed.add_field(name = 'Music help',value ='`A!play <song name>` `A!stop` `A!skip` `A!resume` `A!volume` `A!pause`',inline = False)
       dmmessage = await client.send_message(author,embed=embed)
       await client.say('__CHECK YORU DM__')                                                                                                                                                                                                                                                                                                                                         
-client.run('NTE4NzQwODAxNzkwOTM1MDQw.D2Dg9A.e52vZ3xPSUMhUF8Y8lZr8l2Plpo')
+client.run(os.getenv('Token'))
