@@ -1,1 +1,1 @@
-worker: python android gamer.py
+worker: python androidgamer.py
