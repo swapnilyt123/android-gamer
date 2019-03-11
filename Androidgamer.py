@@ -1227,4 +1227,4 @@ def get_xp(user_id: int):
     else:
         return 0
                                                                                                                                                                                         
-client.run('Your Token')
+client.run(os.getenv('Token'))
