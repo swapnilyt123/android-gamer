@@ -446,19 +446,8 @@ async def on_reaction_add(reaction, user):
            embed.add_field(name = 'A!skip', value ='A!skip to skip the current song',inline = False)
            embed.add_field(name = 'A!movie', value = 'A!mkvie to play a movie',inline = False)        
 def is_owner(ctx):
-     return ctx.message.author.id in ["442592011585978369"]
-for channel in user.server.channels:
-        if channel.name == 'server-log':
-            logchannel = channel
-            r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
-            embed = discord.Embed(color = discord.Color((r << 16) + (g << 8) + b))
-            embed.set_author(name='Reaction Added')
-            embed.add_field(name = 'User: **{0}**'.format(user.name),value ='UserID: **{}**'.format(user.id),inline = False)
-            embed.add_field(name = 'Message:',value ='{}'.format(reaction.message.content),inline = False)
-            embed.add_field(name = 'Channel:',value ='{}'.format(reaction.message.channel.name),inline = False)
-            embed.add_field(name = 'Emoji:',value ='{}'.format(reaction.emoji),inline = False)
-            await client.send_message(logchannel, embed=embed)  
-
+     return ctx.message.author.id in ["442592011585978369"]                           
+                   
 @client.command(pass_context = True)
 async def ping(ctx):
     if ctx.message.author.bot:
