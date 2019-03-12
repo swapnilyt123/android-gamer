@@ -11,7 +11,6 @@ import functools
 import time
 import datetime
 import aiohttp
-import requests
 import json
 import aiohttp
 from contextlib import redirect_stdout
