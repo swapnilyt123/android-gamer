@@ -374,13 +374,10 @@ async def on_reaction_add(reaction, user):
             embed.set_author(name='Help')
             embed.set_image(url = 'https://image.ibb.co/caM2BK/help.gif')
             embed.add_field(name = 'A!ping', value ='A!ping',inline = False)
-            embed.add_field(name = 'A!jointest (admin is required)',value =' A!jointest',inline = False)
             embed.add_field(name = 'A!lock',value ='A!lock',inline = False)
             embed.add_field(name = 'A!unlock',value ='like A!unlock',inline = False)
             
             embed.add_field(name = 'A!dm (admin is required)',value ='A!dm @user (msg)',inline = False)
-            embed.add_field(name = 'A!setw (admin is required)',value ='A!setw',inline = False)
-            embed.add_field(name = 'A!setuplog (admin is required)',value =' A!setuplog',inline = False)
             embed.add_field(name = 'A!getuser (mod or admin is required)',value =' A!getuser (rolename)',inline = False)
             embed.add_field(name = 'A!userinfo (mod or admin is required)',value =' A!userinfo @user',inline = False)
             embed.add_field(name = 'A!roleinfo (mod or admin is required)',value =' A!roleinfo (rolename)',inline = False)
@@ -1226,4 +1223,62 @@ def get_xp(user_id: int):
     else:
         return 0 		   	   	   
 
+
+@client.command(pass_context = True)
+async def play(ctx, *, url):
+    author = ctx.message.author
+    voice_channel = author.voice_channel
+    try:
+        vc = await client.join_voice_channel(voice_channel)
+        msg = await client.say("Loading...")
+        player = await vc.create_ytdl_player("ytsearch:" + url)
+        player.start()
+        await client.say("Succesfully Loaded ur song!")
+        await client.delete_message(msg)
+    except Exception as e:
+        print(e)
+        await client.say("Reconnecting")
+        for x in client.voice_clients:
+            if(x.server == ctx.message.server):
+                await x.disconnect()
+                nvc = await client.join_voice_channel(voice_channel)
+                msg = await client.say("Loading...")
+                player2 = await nvc.create_ytdl_player("ytsearch:" + url)
+                player2.start
+
+@client.command(pass_context = True)
+async def stop(ctx):
+    for x in client.voice_clients:
+        if(x.server == ctx.message.server):
+            return await x.disconnect()
+
+
+@client.event
+async def on_reaction_add(reaction, user):
+    if reaction.emoji == "🇻":
+        role = discord.utils.get(reaction.message.server.roles, name="Verified")
+        await client.add_roles(user, role)
+        await client.send_message(user, f'Added Verified role in {reaction.message.server}')
+
+@client.event
+async def on_reaction_remove(reaction, user):
+    if reaction.emoji == "🇻":
+        role = discord.utils.get(user.server.roles, name="Verified")
+        await client.remove_roles(user, role)
+        await client.send_message(user, f'Removed Verified role in {reaction.message.server}')
+
+@client.command(pass_context = True)
+@commands.has_permissions(administrator=True)
+async def setreactionverify(ctx):
+    author = ctx.message.author
+    server = ctx.message.server
+    everyone_perms = discord.PermissionOverwrite(send_messages=False,read_messages=True)
+    everyone = discord.ChannelPermissions(target=server.default_role, overwrite=everyone_perms)
+    await client.create_channel(server, 'verify',everyone)
+    for channel in author.server.channels:
+        if channel.name == 'Verify':
+            react_message = await client.send_message(channel, 'React with <a:happy:516183323052212236> to Verify | This verification system is to prevent our server from those who join and try to spam from self bots')
+            reaction = 'a:happy:516183323052212236'
+            await client.add_reaction(react_message, reaction)
+	
 client.run(os.getenv('Token'))
