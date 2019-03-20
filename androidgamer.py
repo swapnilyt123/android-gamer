@@ -352,7 +352,7 @@ async def help(ctx):
         author = ctx.message.author
         r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
         embed = discord.Embed(color = discord.Color((r << 16) + (g << 8) + b))
-        embed.set_author(name='My prefix is A! and here are the help information!')
+        embed.set_author(name='My prefix is n! and here are the help information!')
         embed.set_image(url = 'https://image.ibb.co/caM2BK/help.gif')
         embed.add_field(name = 'Having doubts? Join our server and clear your doubts. Server link:',value ='https://discord.gg/sYy9xBK',inline = False)
         embed.add_field(name = 'React with 🇲 ',value ='click it to see the commands',inline = False)
@@ -973,7 +973,7 @@ async def on_member_remove(member):
 async def on_message(message):
     user_add_xp(message.author.id, 2)
     await client.process_commands(message)
-    if message.content.lower().startswith('A!rank'):
+    if message.content.lower().startswith('n!rank'):
         r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
         level=int(get_xp(message.author.id)/100)
         msgs=int(get_xp(message.author.id)/2)
