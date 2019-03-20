@@ -336,6 +336,8 @@ async def rolldice(ctx):
     em = discord.Embed(color=color, title='Rolled! (1 6-sided die)', description=random.choice(choices))
     await client.send_typing(ctx.message.channel)
     await client.say(embed=em)
+
+
 @client.command(pass_context = True)
 async def help(ctx):
     if ctx.message.author.bot:
